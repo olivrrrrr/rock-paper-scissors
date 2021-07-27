@@ -24,6 +24,32 @@ let playerScore = 0;
         }
  }
 
+function points(play){
+    if(play === 'You Win! Paper beats Rock' || 
+        play === 'You Win! Scissors beats Paper' || 
+        play === 'You Win! Scissors beats Paper' || 
+        play === 'You Win! Rock beats Scissors'){
+           playerScore++
+       } else if(play === 'You Lose! Paper beats Rock' || 
+       play === 'You Lose! Scissors beats Paper' || 
+       play === 'You Lose! Scissors beats Paper' || 
+       play === 'You Lose! Rock beats Scissors '){
+           computerScore++;
+       }
+}
+
+function AnnounceWinner(player1, player2){
+    if(player1 + player2 >= 5){
+        if(player1 < player2){
+            alert(`The Computer is the winner. They scored: ${player2}`)
+        } else if(player1 >  player2){
+            alert(`You are the winner. You scored: ${player1}`) 
+        } else {
+            alert('It is a draw - Nobody won !'); 
+        }
+    }
+}
+
 const startButton = document.querySelector('#Start'); 
 startButton.addEventListener('click', () => {
     location.reload();
@@ -38,33 +64,13 @@ buttons.forEach((button) => {
         const playerSelection = e.target.id;
         const computerSelection = computerPlay();
         const numberOfGames = 5; 
-
         document.querySelector('#container').innerHTML = playRound(playerSelection, computerSelection) ;
         
-        if(playRound(playerSelection, computerSelection) === 'You Win! Paper beats Rock' || 
-        playRound(playerSelection, computerSelection) === 'You Win! Scissors beats Paper' || 
-        playRound(playerSelection, computerSelection) === 'You Win! Scissors beats Paper' || 
-        playRound(playerSelection, computerSelection) === 'You Win! Rock beats Scissors'){
-           playerScore++
-       } else if(playRound(playerSelection, computerSelection) === 'You Lose! Paper beats Rock' || 
-       playRound(playerSelection, computerSelection) === 'You Lose! Scissors beats Paper' || 
-       playRound(playerSelection, computerSelection) === 'You Lose! Scissors beats Paper' || 
-       playRound(playerSelection, computerSelection) === 'You Lose! Rock beats Scissors '){
-           computerScore++;
-       }
-         
-         document.querySelector('#scoreContainer').innerHTML  = `player score: ${playerScore} - computer score: ${computerScore}`;
+        points(playRound(playerSelection, computerSelection));
 
-        if(computerScore + playerScore >= 5){
-            if(computerScore > playerScore){
-                alert(`The Computer is the winner. They scored: ${computerScore}`)
-            } else if(computerScore < playerScore){
-                alert(`You are the winner. You scored: ${playerScore}`) 
-            } else {
-                alert('It is a draw - Nobody won !'); 
-            }
-        }
+        document.querySelector('#scoreContainer').innerHTML  = `player score: ${playerScore} - computer score: ${computerScore}`;
            
+        AnnounceWinner(playerScore, computerScore)
     });
 });
 
